@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -10,7 +11,7 @@ from resource.stores import Store,StoreList
 app = Flask(__name__)
 app.secret_key = 'dev'  # this is required to generate jwt access token,else /auth request will give error
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydata.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///mydata.db')
 api = Api(app)
 
 
