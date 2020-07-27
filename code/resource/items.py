@@ -7,21 +7,8 @@ import sqlite3
 class Items(Resource):
     #@jwt_required()
     def get(self):
-        connection=sqlite3.connect('mydata.db')
-        cursor=connection.cursor()
-
-        query="SELECT * from items"
-
-        result=cursor.execute(query)
-
-        itemobj=[]
-
-        for row in result:
-            item={'name':row[1],'price':row[2]}
-            itemobj.append(item)
-
-        connection.close()
-        return {'items':itemobj}
+        
+        return {'items':[it.json() for it in ItemModel.query.all()]}
 
 class Item(Resource):
     parser=reqparse.RequestParser()
